@@ -1,0 +1,64 @@
+# Ansible
+*.retry
+*.log
+
+# Ansible Vault
+*.vault
+*.vault.yml
+*.vault.yaml
+
+# Ansible temporary files
+.ansible/
+ansible/.ansible/
+
+# Ansible cache
+.cache/
+ansible/cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# SSH keys
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Terraform (if used alongside Ansible)
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+temp/
