@@ -1,0 +1,35 @@
+---
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Upgrade all packages (dist-upgrade)
+  ansible.builtin.apt:
+    upgrade: dist
+  become: true
+  register: apt_upgrade_result
+
+
+- name: Remove orphaned packages
+  ansible.builtin.apt:
+    autoremove: true
+  become: true
+
+- name: Clean old package cache
+  ansible.builtin.apt:
+    autoclean: true
+  become: true
+
+- name: Check if reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: reboot_required_file
+
+
+- name: Notify peding reboot
+  ansible.builtin.debug:
+    msg: "A reboot is required after the updates."
+  when: reboot_required_file.stat.exists
+
