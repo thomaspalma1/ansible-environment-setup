@@ -1,0 +1,90 @@
+---
+- name: Remove conflicting packages
+  ansible.builtin.apt:
+    name: "{{ docker_install_conflicting_packages }}"
+    state: absent
+  become: true
+
+- name: Install prerequisites
+  ansible.builtin.apt:
+    name: "{{ docker_install_prerequisites }}"
+    state: present
+    update_cache: true
+  become: true
+
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: "{{ docker_install_keyring_path | dirname }}"
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Download Docker GPG key
+  ansible.builtin.get_url:
+    url: "{{ docker_install_gpg_url }}"
+    dest: "{{ docker_install_keyring_path }}"
+    mode: "0644"
+  become: true
+
+- name: Get dpkg architecture
+  ansible.builtin.command: dpkg --print-architecture
+  register: dpkg_architecture
+  changed_when: false
+
+- name: Add Docker apt repository
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: "{{ docker_install_repo_uri }}"
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components: "{{ docker_install_repo_component }}"
+    architectures: "{{ dpkg_architecture.stdout }}"
+    signed_by: "{{ docker_install_keyring_path }}"
+    state: present
+    enabled: true
+  become: true
+
+- name: Install Docker packages
+  ansible.builtin.apt:
+    name: "{{ docker_install_packages }}"
+    state: present
+    update_cache: true
+  become: true
+
+- name: Configure log rotation
+  ansible.builtin.copy:
+    content: "{{ docker_daemon_config | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    mode: "0644"
+  vars:
+    docker_daemon_config:
+      log-driver: json-file
+      log-opts:
+        max-size: "{{ docker_install_log_max_size }}"
+        max-file: "{{ docker_install_log_max_file }}"
+  become: true
+  notify: Restart docker
+
+- name: Ensure Docker service is enabled and running
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+  become: true
+
+- name: Allow users to run Docker without sudo
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  loop: "{{ docker_install_users }}"
+  become: true
+
+- name: Get Docker version
+  ansible.builtin.command: docker --version
+  register: docker_version_output
+  changed_when: false
+
+- name: Report installed version
+  ansible.builtin.debug:
+    msg: "{{ docker_version_output.stdout }}"
