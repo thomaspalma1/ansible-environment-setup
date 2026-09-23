@@ -1,0 +1,12 @@
+---
+## Todo
+# - Refresh the dnf metadata cache
+# - Upgrade all installed packages
+# - Remove orphaned packages (autoremove)
+# - Clean the dnf cache
+# - Check whether a reboot is required (dnf needs-restarting --reboothint)
+# - Reboot or notify according to update_os_reboot_if_required
+
+- name: Stop on unsupported distribution
+  ansible.builtin.fail:
+    msg: "Fedora support is not implemented yet in the update_os role."
