@@ -1,0 +1,12 @@
+---
+## Todo
+# - Install available macOS updates (softwareupdate --install --all)
+# - Update Homebrew and upgrade installed formulae and casks (community.general.homebrew)
+# - Clean the Homebrew cache (brew cleanup)
+# - Check whether a restart is required (softwareupdate reports "[restart]")
+# - Reboot or notify according to update_os_reboot_if_required
+# - Run Homebrew tasks without become, since Homebrew refuses to run as root
+
+- name: Stop on unsupported operating system
+  ansible.builtin.fail:
+    msg: "macOS support is not implemented yet in the update_os role."

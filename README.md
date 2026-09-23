@@ -28,6 +28,8 @@ Both roles load `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 
 - [ ] Fedora support in `update_os` (`roles/update_os/tasks/Fedora.yaml`)
 - [ ] Fedora support in `docker_install` (`roles/docker_install/tasks/Fedora.yaml`)
+- [ ] macOS support in `update_os` (`roles/update_os/tasks/Darwin.yaml`)
+- [ ] macOS support in `docker_install` (`roles/docker_install/tasks/Darwin.yaml`)
 
 ## Usage
 

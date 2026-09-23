@@ -1,0 +1,11 @@
+---
+## Todo
+# - Install Docker Desktop (community.general.homebrew_cask: docker-desktop)
+# - Configure the local logging driver in ~/.docker/daemon.json
+# - Start Docker Desktop and wait until the daemon responds
+# - Skip the Linux-only steps: apt repository, systemd services and the docker group
+# - Run Homebrew tasks without become, since Homebrew refuses to run as root
+
+- name: Stop on unsupported operating system
+  ansible.builtin.fail:
+    msg: "macOS support is not implemented yet in the docker_install role."
