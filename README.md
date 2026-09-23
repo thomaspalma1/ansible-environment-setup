@@ -9,7 +9,7 @@
 | Role | Description |
 | ---- | ----------- |
 | `update_os` | Refreshes the apt cache, runs a `dist` upgrade, removes orphaned packages, cleans the package cache and handles pending reboots |
-| `docker_install` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository, configures log rotation and grants Docker access to the listed users |
+| `docker_install` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository, configures the `local` logging driver and grants Docker access to the listed users |
 
 Both roles load `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from their `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian is currently supported.
 
@@ -20,9 +20,9 @@ Both roles load `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 | `update_os_cache_valid_time` | `3600` | Seconds the apt cache is considered valid |
 | `update_os_upgrade_type` | `dist` | apt upgrade mode (`dist`, `full`, `safe`, `yes`) |
 | `update_os_reboot_if_required` | `false` | Reboot the host when `/var/run/reboot-required` exists; otherwise only report it |
-| `docker_install_log_max_size` | `10m` | Maximum size of each container log file |
+| `docker_install_log_max_size` | `10m` | Maximum size of each container log file (`local` logging driver) |
 | `docker_install_log_max_file` | `"3"` | Number of rotated container log files kept |
-| `docker_install_users` | `[]` | Users added to the `docker` group to run Docker without `sudo` |
+| `docker_install_users` | `[]` | Users added to the `docker` group to run Docker without `sudo`. The group grants root-level privileges on the host |
 
 ## Todo
 

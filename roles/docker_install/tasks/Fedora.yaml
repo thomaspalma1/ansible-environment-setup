@@ -3,8 +3,8 @@
 # - Remove conflicting packages (docker, docker-client, docker-common, docker-engine, podman-docker, ...)
 # - Add the Docker repository (https://download.docker.com/linux/fedora/docker-ce.repo)
 # - Install docker_install_packages
-# - Configure log rotation in /etc/docker/daemon.json
-# - Enable and start the Docker service
+# - Configure the local logging driver in /etc/docker/daemon.json
+# - Enable and start the docker and containerd services
 # - Add docker_install_users to the docker group
 
 - name: Stop on unsupported distribution
