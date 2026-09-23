@@ -1,0 +1,4 @@
+---
+update_os_cache_valid_time: 3600
+update_os_upgrade_type: dist
+update_os_reboot_if_required: false
