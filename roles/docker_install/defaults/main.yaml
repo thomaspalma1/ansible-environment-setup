@@ -11,6 +11,7 @@ docker_install_conflicting_packages:
 docker_install_prerequisites:
   - ca-certificates
   - curl
+  - python3-debian
 
 docker_install_packages:
   - docker-ce
