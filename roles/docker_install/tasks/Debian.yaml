@@ -51,25 +51,28 @@
     update_cache: true
   become: true
 
-- name: Configure log rotation
+- name: Configure the local logging driver
   ansible.builtin.copy:
     content: "{{ docker_daemon_config | to_nice_json }}"
     dest: /etc/docker/daemon.json
     mode: "0644"
   vars:
     docker_daemon_config:
-      log-driver: json-file
+      log-driver: local
       log-opts:
         max-size: "{{ docker_install_log_max_size }}"
         max-file: "{{ docker_install_log_max_file }}"
   become: true
   notify: Restart docker
 
-- name: Ensure Docker service is enabled and running
+- name: Ensure Docker services are enabled and running
   ansible.builtin.systemd:
-    name: docker
+    name: "{{ item }}"
     enabled: true
     state: started
+  loop:
+    - docker
+    - containerd
   become: true
 
 - name: Allow users to run Docker without sudo
@@ -80,11 +83,15 @@
   loop: "{{ docker_install_users }}"
   become: true
 
-- name: Get Docker version
-  ansible.builtin.command: docker --version
+- name: Reset the connection so the new group membership applies
+  ansible.builtin.meta: reset_connection
+
+- name: Get Docker Engine version from the daemon
+  ansible.builtin.command: docker version --format '{{ "{{" }} .Server.Version {{ "}}" }}'
   register: docker_version_output
   changed_when: false
+  become: true
 
 - name: Report installed version
   ansible.builtin.debug:
-    msg: "{{ docker_version_output.stdout }}"
+    msg: "Docker Engine {{ docker_version_output.stdout }}"
