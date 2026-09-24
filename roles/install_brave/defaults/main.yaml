@@ -1,0 +1,19 @@
+---
+install_brave_supported_architectures:
+  - x86_64
+
+install_brave_prerequisites:
+  - ca-certificates
+  - curl
+  - python3-debian
+
+install_brave_packages:
+  - brave-browser
+
+install_brave_keyring_path: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+install_brave_keyring_url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+install_brave_repo_uri: https://brave-browser-apt-release.s3.brave.com
+install_brave_repo_suite: stable
+install_brave_repo_component: main
+install_brave_repo_architectures:
+  - amd64
