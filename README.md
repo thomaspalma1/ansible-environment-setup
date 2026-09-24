@@ -10,8 +10,9 @@
 | ---- | ----------- |
 | `update_os` | Refreshes the apt cache, runs a `dist` upgrade, removes orphaned packages, cleans the package cache and handles pending reboots |
 | `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository, configures the `local` logging driver and grants Docker access to the listed users |
+| `install_brave` | Installs the Brave browser from the official Brave release apt repository |
 
-Both roles load `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from their `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian is currently supported.
+Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian is currently supported.
 
 ### Variables
 
@@ -48,6 +49,7 @@ Apply the roles from a playbook:
       vars:
         install_docker_users:
           - "{{ ansible_user }}"
+    - install_brave
 ```
 
 The tasks escalate privileges with `become`, so run the playbook with `--ask-become-pass` when the user needs a sudo password.
