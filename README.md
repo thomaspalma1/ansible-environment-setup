@@ -4,6 +4,8 @@
    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg" width="50" height="50"/>
 </p>
 
+Ansible roles that prepare a workstation: they keep the operating system up to date and install the tools I use day to day.
+
 ## Roles
 
 | Role | Description |
@@ -25,13 +27,6 @@ Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 | `install_docker_log_max_size` | `10m` | Maximum size of each container log file (`local` logging driver) |
 | `install_docker_log_max_file` | `"3"` | Number of rotated container log files kept |
 | `install_docker_users` | `[]` | Users added to the `docker` group to run Docker without `sudo`. The group grants root-level privileges on the host |
-
-## Todo
-
-- [ ] Fedora support in `update_os` (`roles/update_os/tasks/Fedora.yaml`)
-- [ ] Fedora support in `install_docker` (`roles/install_docker/tasks/Fedora.yaml`)
-- [ ] macOS support in `update_os` (`roles/update_os/tasks/Darwin.yaml`)
-- [ ] macOS support in `install_docker` (`roles/install_docker/tasks/Darwin.yaml`)
 
 ## Usage
 
@@ -55,3 +50,10 @@ Apply the roles from a playbook:
 ```
 
 The tasks escalate privileges with `become`, so run the playbook with `--ask-become-pass` when the user needs a sudo password.
+
+## Todo
+
+- [ ] Fedora support in `update_os` (`roles/update_os/tasks/Fedora.yaml`)
+- [ ] Fedora support in `install_docker` (`roles/install_docker/tasks/Fedora.yaml`)
+- [ ] macOS support in `update_os` (`roles/update_os/tasks/Darwin.yaml`)
+- [ ] macOS support in `install_docker` (`roles/install_docker/tasks/Darwin.yaml`)
