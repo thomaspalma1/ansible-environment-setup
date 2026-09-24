@@ -4,6 +4,7 @@
     name: zsh
     state: present
     update_cache: true
+    cache_valid_time: 3600
   become: true
 
 - name: Get the username whose default shell will be changed

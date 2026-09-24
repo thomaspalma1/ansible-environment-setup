@@ -10,6 +10,7 @@
     name: "{{ install_docker_prerequisites }}"
     state: present
     update_cache: true
+    cache_valid_time: 3600
   become: true
 
 - name: Create keyrings directory
