@@ -1,0 +1,16 @@
+---
+- name: Install Vim
+  ansible.builtin.apt:
+    name: vim
+    state: present
+    update_cache: true
+  become: true
+
+- name: Download the .vimrc file to the user's home directory
+  ansible.builtin.get_url:
+    url: "{{ install_vim_vimrc_url }}"
+    dest: ~/.vimrc
+    mode: "0644"
+    force: true # Download on every run and replace the file only when the content changed
+    backup: true
+  become: false
