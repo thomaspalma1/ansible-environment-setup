@@ -1,0 +1,17 @@
+---
+- name: Install base packages
+  ansible.builtin.apt:
+    name:
+      - git
+      - python3-venv
+      - tmux
+      - jq
+      - xclip
+      - tree
+      - bat
+      - btop
+      - vlc
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
