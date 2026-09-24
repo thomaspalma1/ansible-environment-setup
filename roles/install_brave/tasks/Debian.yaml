@@ -1,0 +1,40 @@
+---
+- name: Check that the architecture is supported
+  ansible.builtin.assert:
+    that: ansible_facts['architecture'] in install_brave_supported_architectures
+    fail_msg: "This role only installs Brave on {{ install_brave_supported_architectures | join(', ') }} hosts, not {{ ansible_facts['architecture'] }}."
+    quiet: true
+
+- name: Install prerequisites
+  ansible.builtin.apt:
+    name: "{{ install_brave_prerequisites }}"
+    state: present
+    update_cache: true
+  become: true
+
+- name: Download Brave GPG key
+  ansible.builtin.get_url:
+    url: "{{ install_brave_keyring_url }}"
+    dest: "{{ install_brave_keyring_path }}"
+    mode: "0644"
+  become: true
+
+- name: Add Brave apt repository
+  ansible.builtin.deb822_repository:
+    name: brave-browser-release
+    types: deb
+    uris: "{{ install_brave_repo_uri }}"
+    suites: "{{ install_brave_repo_suite }}"
+    components: "{{ install_brave_repo_component }}"
+    architectures: "{{ install_brave_repo_architectures }}"
+    signed_by: "{{ install_brave_keyring_path }}"
+    state: present
+    enabled: true
+  become: true
+
+- name: Install Brave packages
+  ansible.builtin.apt:
+    name: "{{ install_brave_packages }}"
+    state: present
+    update_cache: true
+  become: true
