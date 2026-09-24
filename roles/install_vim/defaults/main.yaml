@@ -1,0 +1,2 @@
+---
+install_vim_vimrc_url: https://raw.githubusercontent.com/thomaspalma1/core-linux-networking/refs/heads/main/ansible/tasks/vim/files/.vimrc
