@@ -13,6 +13,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | `update_os` | Refreshes the apt cache, runs a `dist` upgrade, removes orphaned packages, cleans the package cache and handles pending reboots |
 | `install_base_packages` | Installs everyday packages from the Debian repositories (`git`, `python3-venv`, `tmux`, `jq`, `xclip`, `tree`, `bat`, `btop`, `vlc`) |
 | `install_brave` | Installs the Brave browser from the official Brave release apt repository |
+| `install_discord` | Installs the latest stable Discord from the official `.deb`; each run upgrades it when a newer version is available |
 | `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository, configures the `local` logging driver and grants Docker access to the listed users |
 | `install_vim` | Installs Vim and downloads the `.vimrc` into the home directory of the user Ansible connects as |
 | `install_zsh` | Installs Zsh and sets it as the default shell of the user running the playbook |
@@ -48,6 +49,7 @@ Apply the roles from a playbook:
     - update_os
     - install_base_packages
     - install_brave
+    - install_discord
     - install_docker
     - install_vim
     - install_zsh
