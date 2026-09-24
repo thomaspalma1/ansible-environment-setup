@@ -1,10 +1,4 @@
 ---
-- name: Check that the architecture is supported
-  ansible.builtin.assert:
-    that: ansible_facts['architecture'] in install_brave_supported_architectures
-    fail_msg: "This role only installs Brave on {{ install_brave_supported_architectures | join(', ') }} hosts, not {{ ansible_facts['architecture'] }}."
-    quiet: true
-
 - name: Install prerequisites
   ansible.builtin.apt:
     name: "{{ install_brave_prerequisites }}"
