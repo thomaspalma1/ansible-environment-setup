@@ -1,7 +1,4 @@
 ---
-install_brave_supported_architectures:
-  - x86_64
-
 install_brave_prerequisites:
   - ca-certificates
   - curl
@@ -16,4 +13,4 @@ install_brave_repo_uri: https://brave-browser-apt-release.s3.brave.com
 install_brave_repo_suite: stable
 install_brave_repo_component: main
 install_brave_repo_architectures:
-  - amd64
+  - amd64 # 64-bit Intel/AMD (x86_64)
