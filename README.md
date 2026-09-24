@@ -14,6 +14,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | `install_brave` | Installs the Brave browser from the official Brave release apt repository |
 | `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository, configures the `local` logging driver and grants Docker access to the listed users |
 | `install_vim` | Installs Vim and downloads the `.vimrc` into the home directory of the user Ansible connects as |
+| `install_zsh` | Installs Zsh and sets it as the default shell of the user running the playbook |
 
 Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian is currently supported.
 
@@ -47,6 +48,7 @@ Apply the roles from a playbook:
     - install_brave
     - install_docker
     - install_vim
+    - install_zsh
 ```
 
 The tasks escalate privileges with `become`, so run the playbook with `--ask-become-pass` when the user needs a sudo password.
