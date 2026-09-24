@@ -1,0 +1,5 @@
+---
+- name: Install Discord
+  ansible.builtin.apt:
+    deb: https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=linux&arch=x64&format=deb
+  become: true
