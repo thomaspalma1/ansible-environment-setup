@@ -1,0 +1,31 @@
+---
+install_docker_conflicting_packages:
+  - docker.io
+  - docker-compose
+  - docker-doc
+  - docker-buildx
+  - podman-docker
+  - containerd
+  - runc
+
+install_docker_prerequisites:
+  - ca-certificates
+  - curl
+  - python3-debian
+
+install_docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+install_docker_keyring_path: /etc/apt/keyrings/docker.asc
+install_docker_gpg_url: https://download.docker.com/linux/debian/gpg
+install_docker_repo_uri: https://download.docker.com/linux/debian
+install_docker_repo_component: stable
+
+install_docker_log_max_size: 10m
+install_docker_log_max_file: "3"
+
+install_docker_users: []

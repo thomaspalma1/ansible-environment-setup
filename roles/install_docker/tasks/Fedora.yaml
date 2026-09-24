@@ -2,11 +2,11 @@
 ## Todo
 # - Remove conflicting packages (docker, docker-client, docker-common, docker-engine, podman-docker, ...)
 # - Add the Docker repository (https://download.docker.com/linux/fedora/docker-ce.repo)
-# - Install docker_install_packages
+# - Install install_docker_packages
 # - Configure the local logging driver in /etc/docker/daemon.json
 # - Enable and start the docker and containerd services
-# - Add docker_install_users to the docker group
+# - Add install_docker_users to the docker group
 
 - name: Stop on unsupported distribution
   ansible.builtin.fail:
-    msg: "Fedora support is not implemented yet in the docker_install role."
+    msg: "Fedora support is not implemented yet in the install_docker role."

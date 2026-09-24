@@ -1,28 +1,28 @@
 ---
 - name: Remove conflicting packages
   ansible.builtin.apt:
-    name: "{{ docker_install_conflicting_packages }}"
+    name: "{{ install_docker_conflicting_packages }}"
     state: absent
   become: true
 
 - name: Install prerequisites
   ansible.builtin.apt:
-    name: "{{ docker_install_prerequisites }}"
+    name: "{{ install_docker_prerequisites }}"
     state: present
     update_cache: true
   become: true
 
 - name: Create keyrings directory
   ansible.builtin.file:
-    path: "{{ docker_install_keyring_path | dirname }}"
+    path: "{{ install_docker_keyring_path | dirname }}"
     state: directory
     mode: "0755"
   become: true
 
 - name: Download Docker GPG key
   ansible.builtin.get_url:
-    url: "{{ docker_install_gpg_url }}"
-    dest: "{{ docker_install_keyring_path }}"
+    url: "{{ install_docker_gpg_url }}"
+    dest: "{{ install_docker_keyring_path }}"
     mode: "0644"
   become: true
 
@@ -35,18 +35,18 @@
   ansible.builtin.deb822_repository:
     name: docker
     types: deb
-    uris: "{{ docker_install_repo_uri }}"
+    uris: "{{ install_docker_repo_uri }}"
     suites: "{{ ansible_facts['distribution_release'] }}"
-    components: "{{ docker_install_repo_component }}"
+    components: "{{ install_docker_repo_component }}"
     architectures: "{{ dpkg_architecture.stdout }}"
-    signed_by: "{{ docker_install_keyring_path }}"
+    signed_by: "{{ install_docker_keyring_path }}"
     state: present
     enabled: true
   become: true
 
 - name: Install Docker packages
   ansible.builtin.apt:
-    name: "{{ docker_install_packages }}"
+    name: "{{ install_docker_packages }}"
     state: present
     update_cache: true
   become: true
@@ -60,8 +60,8 @@
     docker_daemon_config:
       log-driver: local
       log-opts:
-        max-size: "{{ docker_install_log_max_size }}"
-        max-file: "{{ docker_install_log_max_file }}"
+        max-size: "{{ install_docker_log_max_size }}"
+        max-file: "{{ install_docker_log_max_file }}"
   become: true
   notify: Restart docker
 
@@ -80,7 +80,7 @@
     name: "{{ item }}"
     groups: docker
     append: true
-  loop: "{{ docker_install_users }}"
+  loop: "{{ install_docker_users }}"
   become: true
 
 - name: Reset the connection so the new group membership applies

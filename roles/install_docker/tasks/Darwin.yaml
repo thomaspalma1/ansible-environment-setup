@@ -8,4 +8,4 @@
 
 - name: Stop on unsupported operating system
   ansible.builtin.fail:
-    msg: "macOS support is not implemented yet in the docker_install role."
+    msg: "macOS support is not implemented yet in the install_docker role."
