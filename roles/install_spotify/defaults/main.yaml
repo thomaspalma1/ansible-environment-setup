@@ -1,12 +1,11 @@
 ---
 install_spotify_prerequisites:
   - ca-certificates
-  - curl
+  - python3-debian
 
 install_spotify_packages:
   - spotify-client
 
-install_spotify_keyring_path: /etc/apt/trusted.gpg.d/spotify.asc
 install_spotify_keyring_url: https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc
 install_spotify_repo_uri: https://repository.spotify.com
 install_spotify_repo_suite: stable
