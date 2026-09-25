@@ -1,0 +1,17 @@
+---
+- name: Set up the environment
+  hosts: localhost
+  connection: local
+  vars:
+    install_docker_users:
+      - "{{ ansible_facts['user_id'] }}"
+  roles:
+    - update_os
+    - install_base_packages
+    - install_vim
+    - install_zsh
+    - install_docker
+    - install_vscode
+    - install_brave
+    - install_discord
+    - install_spotify
