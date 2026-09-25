@@ -11,16 +11,16 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | Role | Description |
 | ---- | ----------- |
 | `update_os` | Refreshes the apt cache, runs a `dist` upgrade, removes orphaned packages, cleans the package cache and handles pending reboots |
-| `install_base_packages` | Installs everyday packages from the Debian repositories (`git`, `python3-venv`, `tmux`, `jq`, `xclip`, `tree`, `bat`, `btop`, `vlc`) |
+| `install_base_packages` | Installs everyday packages from the distribution repositories (`git`, `python3-venv`, `tmux`, `jq`, `xclip`, `tree`, `bat`, `btop`, `vlc`) |
 | `install_vim` | Installs Vim and downloads the `.vimrc` into the home directory of the user Ansible connects as |
 | `install_zsh` | Installs Zsh and sets it as the default shell of the user running the playbook |
-| `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository, configures the `local` logging driver and grants Docker access to the listed users |
+| `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository (the Ubuntu one on Ubuntu-based distributions, the Debian one otherwise), configures the `local` logging driver and grants Docker access to the listed users |
 | `install_vscode` | Installs the latest stable Visual Studio Code from the official `.deb`, which also adds the Microsoft apt repository so `update_os` keeps it up to date |
 | `install_brave` | Installs the Brave browser from the official Brave release apt repository |
 | `install_discord` | Installs the latest stable Discord from the official `.deb`; each run upgrades it when a newer version is available |
 | `install_spotify` | Installs the Spotify client from the official Spotify apt repository |
 
-Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian is currently supported.
+Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian and Debian-based distributions (Ubuntu, Linux Mint, Zorin OS, Pop!_OS) are currently supported.
 
 ### Variables
 
@@ -35,31 +35,19 @@ Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 
 ## Usage
 
+On a freshly installed system, install Ansible and Git, clone this repository and run the playbook from its root:
+
 ```sh
+sudo apt install ansible-core git
+git clone https://github.com/thomaspalma1/ansible-environment-setup.git
+cd ansible-environment-setup
 ansible-galaxy collection install -r requirements.yaml
+ansible-playbook playbook.yaml --ask-become-pass
 ```
 
-Apply the roles from a playbook:
+[playbook.yaml](playbook.yaml) runs every role on the local machine and adds the current user to the `docker` group. The run is idempotent: if a task fails, fix the cause and run the same command again.
 
-```yaml
-- name: Set up the environment
-  hosts: all
-  vars:
-    install_docker_users:
-      - "{{ ansible_user }}"
-  roles:
-    - update_os
-    - install_base_packages
-    - install_vim
-    - install_zsh
-    - install_docker
-    - install_vscode
-    - install_brave
-    - install_discord
-    - install_spotify
-```
-
-The tasks escalate privileges with `become`, so run the playbook with `--ask-become-pass` when the user needs a sudo password.
+When it finishes, reboot if the run reported that a reboot is required, and log out and back in so Zsh and the `docker` group take effect.
 
 ## Todo
 
