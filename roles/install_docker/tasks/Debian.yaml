@@ -13,6 +13,18 @@
     cache_valid_time: 3600
   become: true
 
+# Ubuntu and its derivatives (Linux Mint, Zorin OS, Pop!_OS) set UBUNTU_CODENAME
+# and use Docker's Ubuntu repository; Debian uses the Debian one.
+- name: Read the Ubuntu codename from os-release
+  ansible.builtin.shell: . /etc/os-release && echo "${UBUNTU_CODENAME:-}"
+  register: install_docker_ubuntu_codename
+  changed_when: false
+
+- name: Select the Docker repository for this distribution
+  ansible.builtin.set_fact:
+    install_docker_distribution: "{{ 'ubuntu' if install_docker_ubuntu_codename.stdout else 'debian' }}"
+    install_docker_codename: "{{ install_docker_ubuntu_codename.stdout or ansible_facts['distribution_release'] }}"
+
 - name: Create keyrings directory
   ansible.builtin.file:
     path: "{{ install_docker_keyring_path | dirname }}"
@@ -37,7 +49,7 @@
     name: docker
     types: deb
     uris: "{{ install_docker_repo_uri }}"
-    suites: "{{ ansible_facts['distribution_release'] }}"
+    suites: "{{ install_docker_codename }}"
     components: "{{ install_docker_repo_component }}"
     architectures: "{{ dpkg_architecture.stdout }}"
     signed_by: "{{ install_docker_keyring_path }}"
