@@ -18,3 +18,13 @@
     name: "{{ install_zsh_user.stdout }}"
     shell: /usr/bin/zsh
   become: true
+
+# Zsh does not read ~/.profile, which is where Debian and Ubuntu add
+# ~/.local/bin (used by pipx and pip --user) to PATH.
+- name: Load ~/.profile in Zsh login shells
+  ansible.builtin.lineinfile:
+    path: ~/.zprofile
+    line: "[[ -f ~/.profile ]] && emulate sh -c '. ~/.profile'"
+    create: true
+    mode: "0644"
+  become: false
