@@ -7,18 +7,23 @@
     cache_valid_time: 3600
   become: true
 
-- name: Download Spotify GPG key
-  ansible.builtin.get_url:
-    url: "{{ install_spotify_keyring_url }}"
-    dest: "{{ install_spotify_keyring_path }}"
-    mode: "0644"
+- name: Add Spotify apt repository
+  ansible.builtin.deb822_repository:
+    name: spotify
+    types: deb
+    uris: "{{ install_spotify_repo_uri }}"
+    suites: "{{ install_spotify_repo_suite }}"
+    components: "{{ install_spotify_repo_component }}"
+    architectures: "{{ install_spotify_repo_architectures }}"
+    signed_by: "{{ install_spotify_keyring_url }}"
+    state: present
   become: true
 
-- name: Add Spotify apt repository
+- name: Keep spotify-client from adding a duplicate repository
   ansible.builtin.copy:
-    content: >
-      deb [arch={{ install_spotify_repo_architectures | join(',') }}]
-      {{ install_spotify_repo_uri }} {{ install_spotify_repo_suite }} {{ install_spotify_repo_component }}
+    content: |
+      # The Spotify repository is configured in spotify.sources.
+      # spotify-client only adds its own repository when this file does not exist.
     dest: /etc/apt/sources.list.d/spotify.list
     mode: "0644"
   become: true
