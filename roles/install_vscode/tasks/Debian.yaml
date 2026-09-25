@@ -1,4 +1,14 @@
 ---
+# The .deb writes the Microsoft key with gpg. Without gpg the key file is left
+# empty, every later apt update fails, and reinstalling does not rewrite it.
+- name: Install prerequisites
+  ansible.builtin.apt:
+    name: gnupg
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
 - name: Install Visual Studio Code
   ansible.builtin.apt:
     deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
