@@ -2,6 +2,7 @@
 install_docker_conflicting_packages:
   - docker.io
   - docker-compose
+  - docker-compose-v2
   - docker-doc
   - docker-buildx
   - podman-docker
@@ -21,8 +22,9 @@ install_docker_packages:
   - docker-compose-plugin
 
 install_docker_keyring_path: /etc/apt/keyrings/docker.asc
-install_docker_gpg_url: https://download.docker.com/linux/debian/gpg
-install_docker_repo_uri: https://download.docker.com/linux/debian
+install_docker_download_url: https://download.docker.com/linux
+install_docker_gpg_url: "{{ install_docker_download_url }}/{{ install_docker_distribution }}/gpg"
+install_docker_repo_uri: "{{ install_docker_download_url }}/{{ install_docker_distribution }}"
 install_docker_repo_component: stable
 
 install_docker_log_max_size: 10m
