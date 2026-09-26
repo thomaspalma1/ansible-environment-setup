@@ -1,5 +1,10 @@
 ---
+# Retry the download if the server or DNS fails for a moment, instead of failing the run.
 - name: Install Discord
   ansible.builtin.apt:
     deb: https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=linux&arch=x64&format=deb
+  register: install_discord_deb
+  until: install_discord_deb is succeeded
+  retries: 3
+  delay: 10
   become: true
