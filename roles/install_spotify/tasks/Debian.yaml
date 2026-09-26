@@ -7,6 +7,20 @@
     cache_valid_time: 3600
   become: true
 
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: "{{ install_spotify_keyring_path | dirname }}"
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Download Spotify GPG key
+  ansible.builtin.get_url:
+    url: "{{ install_spotify_keyring_url }}"
+    dest: "{{ install_spotify_keyring_path }}"
+    mode: "0644"
+  become: true
+
 - name: Add Spotify apt repository
   ansible.builtin.deb822_repository:
     name: spotify
@@ -15,7 +29,7 @@
     suites: "{{ install_spotify_repo_suite }}"
     components: "{{ install_spotify_repo_component }}"
     architectures: "{{ install_spotify_repo_architectures }}"
-    signed_by: "{{ install_spotify_keyring_url }}"
+    signed_by: "{{ install_spotify_keyring_path }}"
     state: present
   become: true
 
