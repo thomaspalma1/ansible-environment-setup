@@ -41,7 +41,7 @@
 
 - name: Get dpkg architecture
   ansible.builtin.command: dpkg --print-architecture
-  register: dpkg_architecture
+  register: install_docker_dpkg_architecture
   changed_when: false
 
 - name: Add Docker apt repository
@@ -51,7 +51,7 @@
     uris: "{{ install_docker_repo_uri }}"
     suites: "{{ install_docker_codename }}"
     components: "{{ install_docker_repo_component }}"
-    architectures: "{{ dpkg_architecture.stdout }}"
+    architectures: "{{ install_docker_dpkg_architecture.stdout }}"
     signed_by: "{{ install_docker_keyring_path }}"
     state: present
     enabled: true
@@ -101,10 +101,10 @@
 
 - name: Get Docker Engine version from the daemon
   ansible.builtin.command: docker version --format '{{ "{{" }} .Server.Version {{ "}}" }}'
-  register: docker_version_output
+  register: install_docker_version_output
   changed_when: false
   become: true
 
 - name: Report installed version
   ansible.builtin.debug:
-    msg: "Docker Engine {{ docker_version_output.stdout }}"
+    msg: "Docker Engine {{ install_docker_version_output.stdout }}"
