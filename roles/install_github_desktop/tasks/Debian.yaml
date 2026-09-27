@@ -1,0 +1,13 @@
+---
+# GitHub does not publish GitHub Desktop for Linux. This installs the community
+# Linux fork (https://github.com/shiftkey/desktop) from its GitHub releases. The
+# release file names include the version, so update the link on a new release.
+# Retry the download in case of a temporary network or DNS failure.
+- name: Install GitHub Desktop
+  ansible.builtin.apt:
+    deb: https://github.com/shiftkey/desktop/releases/download/release-3.4.13-linux1/GitHubDesktop-linux-amd64-3.4.13-linux1.deb
+  register: install_github_desktop_deb
+  until: install_github_desktop_deb is succeeded
+  retries: 3
+  delay: 10
+  become: true
