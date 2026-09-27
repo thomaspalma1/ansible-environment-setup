@@ -21,7 +21,6 @@ main() {
 
   # https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html
   pipx install ansible-core
-  ansible --version
 
   if [ -d "$REPO_DIR/.git" ]; then
     git -C "$REPO_DIR" pull --ff-only
@@ -30,6 +29,8 @@ main() {
   fi
 
   cd "$REPO_DIR"
+  # Run from the repository, so this also shows that its ansible.cfg is in use
+  ansible --version
   ansible-galaxy collection install -r requirements.yaml
   # stdin is the script itself under curl | bash, so the password prompt reads the terminal
   ansible-playbook playbook.yaml --ask-become-pass </dev/tty
