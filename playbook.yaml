@@ -8,12 +8,12 @@
   roles:
     - update_os
     - install_base_packages
-    - install_vim
     - install_zsh
+    - install_vim
+    - install_brave
     - install_docker
     - install_vscode
     - install_github_desktop
-    - install_brave
     - install_discord
     - install_spotify
     - install_steam
