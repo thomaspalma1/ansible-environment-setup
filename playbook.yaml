@@ -3,6 +3,9 @@
   hosts: localhost
   connection: local
   vars:
+    # Run modules with the system Python, which has python3-apt and python3-debian.
+    # Ansible installed with pipx would otherwise run them with its own isolated Python.
+    ansible_python_interpreter: /usr/bin/python3
     install_docker_users:
       - "{{ ansible_facts['user_id'] }}"
   roles:
