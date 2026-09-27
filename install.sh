@@ -14,8 +14,7 @@ REPO_DIR="$HOME/ansible-environment-setup"
 main() {
   # https://pipx.pypa.io/stable/how-to/install-pipx/
   sudo apt-get update
-  # noninteractive: take default answers instead of stopping on debconf questions
-  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y pipx git
+  sudo apt-get install -y pipx git
   pipx ensurepath
   # ensurepath only affects new shells; this one needs ~/.local/bin now
   export PATH="$HOME/.local/bin:$PATH"
