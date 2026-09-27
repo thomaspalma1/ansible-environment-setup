@@ -49,6 +49,12 @@ ansible-playbook playbook.yaml --ask-become-pass
 
 [playbook.yaml](playbook.yaml) runs every role on the local machine and adds the current user to the `docker` group. The run is idempotent: if a task fails, fix the cause and run the same command again.
 
+Every run is also appended to `ansible.log` in the repository root ([ansible.cfg](ansible.cfg) sets `log_path`), so you can check later what the playbook did. To list only the tasks that changed something:
+
+```sh
+grep -B1 'changed:' ansible.log
+```
+
 When it finishes, reboot if the run reported that a reboot is required, and log out and back in so Zsh and the `docker` group take effect.
 
 ## Todo
