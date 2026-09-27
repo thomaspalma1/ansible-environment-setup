@@ -12,6 +12,7 @@
     - install_zsh
     - install_docker
     - install_vscode
+    - install_github_desktop
     - install_brave
     - install_discord
     - install_spotify
