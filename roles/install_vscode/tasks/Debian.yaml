@@ -9,7 +9,7 @@
     cache_valid_time: 3600
   become: true
 
-# Retry the download if the server or DNS fails for a moment, instead of failing the run.
+# Retry the download in case of a temporary network or DNS failure.
 - name: Install Visual Studio Code
   ansible.builtin.apt:
     deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
