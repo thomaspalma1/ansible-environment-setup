@@ -37,13 +37,24 @@ Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 
 ## Usage
 
-On a freshly installed system, install Ansible and Git, clone this repository and run the playbook from its root:
+On a freshly installed system, run:
 
 ```sh
-sudo apt install ansible-core git
-git clone https://github.com/thomaspalma1/ansible-environment-setup.git
-cd ansible-environment-setup
-ansible-galaxy collection install -r requirements.yaml
+curl -fsSL https://raw.githubusercontent.com/thomaspalma1/ansible-environment-setup/main/install.sh | bash
+```
+
+If `curl` is not installed (Ubuntu Desktop ships `wget` instead), use:
+
+```sh
+wget -qO- https://raw.githubusercontent.com/thomaspalma1/ansible-environment-setup/main/install.sh | bash
+```
+
+[install.sh](install.sh) installs `pipx` and Git, installs Ansible with `pipx` as the [Ansible installation guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html) recommends, clones this repository into `~/ansible-environment-setup` and runs the playbook. It asks for the sudo password twice: once to install the packages and once for Ansible.
+
+To run the playbook again later, from the repository:
+
+```sh
+cd ~/ansible-environment-setup
 ansible-playbook playbook.yaml --ask-become-pass
 ```
 
