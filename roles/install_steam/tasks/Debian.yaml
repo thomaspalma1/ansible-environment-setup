@@ -1,0 +1,33 @@
+---
+# steam.deb installs only the launcher and Valve's apt repository. The i386
+# architecture and the Steam libraries are set up here, so Steam does not stop
+# on its first start to ask for the sudo password and install them.
+- name: Get the enabled foreign architectures
+  ansible.builtin.command: dpkg --print-foreign-architectures
+  register: install_steam_foreign_architectures
+  changed_when: false
+
+- name: Enable 32-bit (i386) packages
+  ansible.builtin.command: dpkg --add-architecture i386
+  when: "'i386' not in install_steam_foreign_architectures.stdout_lines"
+  changed_when: true
+  become: true
+
+# Retry the download if the server or DNS fails for a moment, instead of failing the run.
+- name: Install Steam
+  ansible.builtin.apt:
+    deb: https://cdn.akamai.steamstatic.com/client/installer/steam.deb
+  register: install_steam_deb
+  until: install_steam_deb is succeeded
+  retries: 3
+  delay: 10
+  become: true
+
+- name: Install Steam libraries
+  ansible.builtin.apt:
+    name:
+      - steam-libs-amd64
+      - steam-libs-i386
+    state: present
+    update_cache: true
+  become: true
