@@ -31,6 +31,7 @@
     architectures: "{{ install_spotify_repo_architectures }}"
     signed_by: "{{ install_spotify_keyring_path }}"
     state: present
+    enabled: true
   become: true
 
 - name: Keep spotify-client from adding a duplicate repository
