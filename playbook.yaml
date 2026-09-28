@@ -15,6 +15,7 @@
     - install_vim
     - install_brave
     - install_docker
+    - install_terraform
     - install_vscode
     - install_github_desktop
     - install_discord
