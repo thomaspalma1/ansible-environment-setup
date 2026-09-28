@@ -1,0 +1,12 @@
+---
+install_terraform_prerequisites:
+  - ca-certificates
+  - python3-debian
+
+install_terraform_packages:
+  - terraform
+
+install_terraform_keyring_path: /usr/share/keyrings/hashicorp-archive-keyring.asc
+install_terraform_keyring_url: https://apt.releases.hashicorp.com/gpg
+install_terraform_repo_uri: https://apt.releases.hashicorp.com
+install_terraform_repo_component: main
