@@ -1,0 +1,49 @@
+---
+- name: Install prerequisites
+  ansible.builtin.apt:
+    name: "{{ install_vagrant_prerequisites }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Download HashiCorp GPG key
+  ansible.builtin.get_url:
+    url: "{{ install_vagrant_keyring_url }}"
+    dest: "{{ install_vagrant_keyring_path }}"
+    mode: "0644"
+  become: true
+
+# As in HashiCorp's instructions, Ubuntu and its derivatives use UBUNTU_CODENAME
+# as the repository suite; Debian uses its own codename.
+- name: Read the Ubuntu codename from os-release
+  ansible.builtin.shell: . /etc/os-release && echo "${UBUNTU_CODENAME:-}"
+  register: install_vagrant_ubuntu_codename
+  changed_when: false
+
+- name: Get dpkg architecture
+  ansible.builtin.command: dpkg --print-architecture
+  register: install_vagrant_dpkg_architecture
+  changed_when: false
+
+# Same HashiCorp repository as install_terraform: keep both definitions identical,
+# otherwise each role rewrites the file the other one created.
+- name: Add HashiCorp apt repository
+  ansible.builtin.deb822_repository:
+    name: hashicorp
+    types: deb
+    uris: "{{ install_vagrant_repo_uri }}"
+    suites: "{{ install_vagrant_ubuntu_codename.stdout or ansible_facts['distribution_release'] }}"
+    components: "{{ install_vagrant_repo_component }}"
+    architectures: "{{ install_vagrant_dpkg_architecture.stdout }}"
+    signed_by: "{{ install_vagrant_keyring_path }}"
+    state: present
+    enabled: true
+  become: true
+
+- name: Install Vagrant packages
+  ansible.builtin.apt:
+    name: "{{ install_vagrant_packages }}"
+    state: present
+    update_cache: true
+  become: true
