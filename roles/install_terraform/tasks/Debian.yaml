@@ -26,6 +26,8 @@
   register: install_terraform_dpkg_architecture
   changed_when: false
 
+# Same HashiCorp repository as install_vagrant: keep both definitions identical,
+# otherwise each role rewrites the file the other one created.
 - name: Add HashiCorp apt repository
   ansible.builtin.deb822_repository:
     name: hashicorp
