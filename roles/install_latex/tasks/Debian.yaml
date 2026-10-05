@@ -1,0 +1,13 @@
+---
+- name: Install LaTeX packages
+  ansible.builtin.apt:
+    name:
+      - texlive-latex-base
+      - texlive-latex-recommended
+      - texlive-latex-extra
+      - texlive-plain-generic
+      - latexmk
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
