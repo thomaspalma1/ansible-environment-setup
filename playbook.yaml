@@ -19,6 +19,7 @@
     - install_vagrant
     - install_vscode
     - install_github_desktop
+    - install_latex
     - install_discord
     - install_spotify
     - install_steam
