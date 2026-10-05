@@ -11,7 +11,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | Role | Description |
 | ---- | ----------- |
 | `update_os` | Refreshes the apt cache, runs a `dist` upgrade, removes orphaned packages, cleans the package cache and handles pending reboots |
-| `install_base_packages` | Installs everyday packages from the distribution repositories (`git`, `python3-venv`, `tmux`, `jq`, `xclip`, `tree`, `bat`, `btop`, `vlc`) |
+| `install_base_packages` | Installs everyday packages from the distribution repositories (`git`, `python3-venv`, `tmux`, `jq`, `xclip`, `tree`, `unzip`, `bat`, `btop`, `vlc`) |
 | `install_zsh` | Installs Zsh, sets it as the default shell of the user running the playbook and makes it load `~/.profile`, so `~/.local/bin` stays in `PATH` |
 | `install_vim` | Installs Vim and downloads the `.vimrc` into the home directory of the user Ansible connects as |
 | `install_brave` | Installs the Brave browser from the official Brave release apt repository |
@@ -20,6 +20,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | `install_vagrant` | Installs Vagrant from the official HashiCorp apt repository (the same one `install_terraform` uses) |
 | `install_vscode` | Installs the latest stable Visual Studio Code from the official `.deb`, which also adds the Microsoft apt repository so `update_os` keeps it up to date |
 | `install_github_desktop` | Installs GitHub Desktop from the community Linux fork ([shiftkey/desktop](https://github.com/shiftkey/desktop)), since GitHub does not publish it for Linux |
+| `install_latex` | Installs LaTeX from the distribution repositories (TeX Live base, recommended and extra packages, plain generic) and `latexmk` |
 | `install_discord` | Installs the latest stable Discord from the official `.deb`; each run upgrades it when a newer version is available |
 | `install_spotify` | Installs the Spotify client from the official Spotify apt repository |
 | `install_steam` | Installs Steam from Valve's official `.deb`, enables 32-bit (i386) packages and installs the Steam libraries, so Steam does not ask for them on its first start |
