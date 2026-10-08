@@ -17,6 +17,7 @@
     - install_docker
     - install_terraform
     - install_vagrant
+    - install_kubectl
     - install_vscode
     - install_github_desktop
     - install_latex
