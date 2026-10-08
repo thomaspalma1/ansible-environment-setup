@@ -1,0 +1,32 @@
+---
+# Both downloads retry in case of a temporary network or DNS failure.
+- name: Get the kubectl version of the release channel
+  ansible.builtin.uri:
+    url: "{{ install_kubectl_release_url }}/{{ install_kubectl_channel }}.txt"
+    return_content: true
+  register: install_kubectl_release
+  until: install_kubectl_release is succeeded
+  retries: 3
+  delay: 10
+
+# The checksum file validates the binary, as in the official instructions, and lets
+# get_url skip the download while the installed binary already matches it.
+- name: Install kubectl
+  ansible.builtin.get_url:
+    url: "{{ install_kubectl_url }}"
+    checksum: "sha256:{{ install_kubectl_url }}.sha256"
+    dest: "{{ install_kubectl_path }}"
+    owner: root
+    group: root
+    mode: "0755"
+  vars:
+    install_kubectl_url: "{{ install_kubectl_release_url }}/{{ install_kubectl_release.content | trim }}/bin/linux/{{ install_kubectl_arch }}/kubectl"
+  register: install_kubectl_download
+  until: install_kubectl_download is succeeded
+  retries: 3
+  delay: 10
+  become: true
+
+- name: Check the kubectl client
+  ansible.builtin.command: "{{ install_kubectl_path }} version --client"
+  changed_when: false
