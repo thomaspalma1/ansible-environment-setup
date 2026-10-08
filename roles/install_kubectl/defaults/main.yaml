@@ -1,0 +1,8 @@
+---
+# Release channel read from https://dl.k8s.io/release/<channel>.txt: "stable" is the
+# latest release; "stable-1.36", for example, keeps kubectl on the 1.36 line.
+# kubectl must be within one minor version of the cluster it talks to.
+install_kubectl_channel: stable
+install_kubectl_release_url: https://dl.k8s.io/release
+install_kubectl_arch: amd64 # 64-bit Intel/AMD (x86_64)
+install_kubectl_path: /usr/local/bin/kubectl
