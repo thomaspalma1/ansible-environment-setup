@@ -1,0 +1,6 @@
+---
+# The release files have no version in their names, so this link always points to
+# the latest release
+install_kind_release_url: https://github.com/kubernetes-sigs/kind/releases/latest/download
+install_kind_arch: amd64 # 64-bit Intel/AMD (x86_64)
+install_kind_path: /usr/local/bin/kind
