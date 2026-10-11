@@ -1,0 +1,23 @@
+---
+# Retry the download in case of a temporary network or DNS failure.
+# The checksum file published with each release validates the binary and lets
+# get_url skip the download while the installed binary already matches it.
+- name: Install kind
+  ansible.builtin.get_url:
+    url: "{{ install_kind_url }}"
+    checksum: "sha256:{{ install_kind_url }}.sha256sum"
+    dest: "{{ install_kind_path }}"
+    owner: root
+    group: root
+    mode: "0755"
+  vars:
+    install_kind_url: "{{ install_kind_release_url }}/kind-linux-{{ install_kind_arch }}"
+  register: install_kind_download
+  until: install_kind_download is succeeded
+  retries: 3
+  delay: 10
+  become: true
+
+- name: Check the kind version
+  ansible.builtin.command: "{{ install_kind_path }} version"
+  changed_when: false
