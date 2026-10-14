@@ -1,0 +1,23 @@
+---
+# Retry the download in case of a temporary network or DNS failure.
+# The checksum file published with each release validates the binary and lets
+# get_url skip the download while the installed binary already matches it.
+- name: Install minikube
+  ansible.builtin.get_url:
+    url: "{{ install_minikube_url }}"
+    checksum: "sha256:{{ install_minikube_url }}.sha256"
+    dest: "{{ install_minikube_path }}"
+    owner: root
+    group: root
+    mode: "0755"
+  vars:
+    install_minikube_url: "{{ install_minikube_release_url }}/minikube-linux-{{ install_minikube_arch }}"
+  register: install_minikube_download
+  until: install_minikube_download is succeeded
+  retries: 3
+  delay: 10
+  become: true
+
+- name: Check the minikube version
+  ansible.builtin.command: "{{ install_minikube_path }} version"
+  changed_when: false
