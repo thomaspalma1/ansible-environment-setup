@@ -19,6 +19,7 @@
     - install_vagrant
     - install_kubectl
     - install_kind
+    - install_minikube
     - install_vscode
     - install_github_desktop
     - install_latex
