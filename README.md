@@ -27,7 +27,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | `install_discord` | Installs the latest stable Discord from the official `.deb`; each run upgrades it when a newer version is available |
 | `install_spotify` | Installs the Spotify client from the official Spotify apt repository |
 | `install_steam` | Installs Steam from Valve's official `.deb`, enables 32-bit (i386) packages and installs the Steam libraries, so Steam does not ask for them on its first start |
-| `install_opentabletdriver` | Installs OpenTabletDriver from its official `.deb` (with .NET 8 from Microsoft's repository on Debian, which does not ship it) and enables its systemd user service |
+| `install_opentabletdriver` | Installs OpenTabletDriver from its official `.deb` (with .NET 8 from Microsoft's repository on Debian, which does not ship it), downloads `settings.json` from the dotfiles repository into `~/.config/OpenTabletDriver` and enables its systemd user service |
 
 Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian 13 and distributions based on Ubuntu 24.04 or newer (Ubuntu, Linux Mint 22, Zorin OS 18, Pop!_OS 24.04) are currently supported. Older releases lack libraries that some applications require: Spotify, for example, needs glibc 2.39.
 
