@@ -1,0 +1,67 @@
+---
+# OpenTabletDriver depends on dotnet-runtime-8.0. Ubuntu and its derivatives (which set
+# UBUNTU_CODENAME) ship it; Debian does not, so there it comes from Microsoft's
+# repository, as the OpenTabletDriver and .NET installation guides describe.
+- name: Read the Ubuntu codename from os-release
+  ansible.builtin.shell: . /etc/os-release && echo "${UBUNTU_CODENAME:-}"
+  register: install_opentabletdriver_ubuntu_codename
+  changed_when: false
+
+- name: Install .NET 8 from the Microsoft repository on Debian
+  when: install_opentabletdriver_ubuntu_codename.stdout | length == 0
+  block:
+    # Retry the download in case of a temporary network or DNS failure.
+    - name: Add the Microsoft package repository
+      ansible.builtin.apt:
+        deb: "https://packages.microsoft.com/config/debian/{{ ansible_facts['distribution_major_version'] }}/packages-microsoft-prod.deb"
+      register: install_opentabletdriver_microsoft_repo
+      until: install_opentabletdriver_microsoft_repo is succeeded
+      retries: 3
+      delay: 10
+      become: true
+
+    - name: Install the .NET 8 runtime
+      ansible.builtin.apt:
+        name: dotnet-runtime-8.0
+        state: present
+        update_cache: true
+      become: true
+
+# The release file names include the version, so update the link on a new release.
+# Retry the download in case of a temporary network or DNS failure.
+- name: Install OpenTabletDriver
+  ansible.builtin.apt:
+    deb: https://github.com/OpenTabletDriver/OpenTabletDriver/releases/download/v0.6.7/opentabletdriver_0.6.7-1_x64.deb
+  register: install_opentabletdriver_deb
+  until: install_opentabletdriver_deb is succeeded
+  retries: 3
+  delay: 10
+  become: true
+
+# OpenTabletDriver reads its settings from $XDG_CONFIG_HOME/OpenTabletDriver, which is
+# ~/.config/OpenTabletDriver by default.
+- name: Create the OpenTabletDriver configuration directory
+  ansible.builtin.file:
+    path: ~/.config/OpenTabletDriver
+    state: directory
+    mode: "0755"
+  become: false
+
+- name: Download the OpenTabletDriver settings
+  ansible.builtin.get_url:
+    url: "{{ install_opentabletdriver_settings_url }}"
+    dest: ~/.config/OpenTabletDriver/settings.json
+    mode: "0644"
+    force: true # Download on every run and replace the file only when the content changed
+    backup: true
+  become: false
+
+# Autostart, as in the OpenTabletDriver FAQ (systemctl --user enable opentabletdriver.service).
+# The unit only starts inside a graphical session, so it is enabled here and starts at the
+# next login, after the reboot that ends the setup.
+- name: Enable the OpenTabletDriver user service
+  ansible.builtin.systemd_service:
+    name: opentabletdriver.service
+    scope: user
+    enabled: true
+  become: false
