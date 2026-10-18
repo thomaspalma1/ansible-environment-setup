@@ -14,14 +14,14 @@
     - install_zsh
     - install_vim
     - install_brave
+    - install_vscode
+    - install_github_desktop
     - install_docker
     - install_terraform
     - install_vagrant
     - install_kubectl
     - install_kind
     - install_minikube
-    - install_vscode
-    - install_github_desktop
     - install_latex
     - install_discord
     - install_spotify
