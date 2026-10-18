@@ -15,14 +15,14 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | `install_zsh` | Installs Zsh, sets it as the default shell of the user running the playbook and makes it load `~/.profile`, so `~/.local/bin` stays in `PATH` |
 | `install_vim` | Installs Vim and downloads the `.vimrc` into the home directory of the user Ansible connects as |
 | `install_brave` | Installs the Brave browser from the official Brave release apt repository |
+| `install_vscode` | Installs the latest stable Visual Studio Code from the official `.deb`, which also adds the Microsoft apt repository so `update_os` keeps it up to date |
+| `install_github_desktop` | Installs GitHub Desktop from the community Linux fork ([shiftkey/desktop](https://github.com/shiftkey/desktop)), since GitHub does not publish it for Linux |
 | `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository (the Ubuntu one on Ubuntu-based distributions, the Debian one otherwise), configures the `local` logging driver and grants Docker access to the listed users |
 | `install_terraform` | Installs Terraform from the official HashiCorp apt repository |
 | `install_vagrant` | Installs Vagrant from the official HashiCorp apt repository (the same one `install_terraform` uses) |
 | `install_kubectl` | Installs the kubectl binary from the official Kubernetes release, validated against its published checksum |
 | `install_kind` | Installs the latest kind binary from its GitHub releases, validated against its published checksum |
 | `install_minikube` | Installs the latest minikube binary from its GitHub releases, validated against its published checksum |
-| `install_vscode` | Installs the latest stable Visual Studio Code from the official `.deb`, which also adds the Microsoft apt repository so `update_os` keeps it up to date |
-| `install_github_desktop` | Installs GitHub Desktop from the community Linux fork ([shiftkey/desktop](https://github.com/shiftkey/desktop)), since GitHub does not publish it for Linux |
 | `install_latex` | Installs LaTeX from the distribution repositories (TeX Live base, recommended and extra packages, plain generic) and `latexmk` |
 | `install_discord` | Installs the latest stable Discord from the official `.deb`; each run upgrades it when a newer version is available |
 | `install_spotify` | Installs the Spotify client from the official Spotify apt repository |
