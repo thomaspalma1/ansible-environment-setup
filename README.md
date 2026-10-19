@@ -6,6 +6,13 @@
 
 Ansible roles that prepare a workstation: they keep the operating system up to date and install the tools I use day to day.
 
+## Table of Contents
+
+- [Roles](#roles)
+  - [Variables](#variables)
+- [Usage](#usage)
+- [Todo](#todo)
+
 ## Roles
 
 | Role | Description |
