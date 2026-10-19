@@ -91,9 +91,7 @@ When it finishes, reboot the machine: this applies the upgraded packages, Zsh as
 
 ## 🔮 What Comes Next?
 
-- [ ] Fedora support in `update_os` (`roles/update_os/tasks/Fedora.yaml`)
-- [ ] Fedora support in `install_docker` (`roles/install_docker/tasks/Fedora.yaml`)
-- [ ] macOS support in `update_os` (`roles/update_os/tasks/Darwin.yaml`)
-- [ ] macOS support in `install_docker` (`roles/install_docker/tasks/Darwin.yaml`)
+- [ ] **Fedora support:** replicate the concept and structure applied to Debian. Each role gets a `Fedora.yaml`, loaded by the same task selection, that installs the same tools from their official sources, so a single `install.sh` run prepares a freshly installed Fedora. The tasks follow Fedora's own characteristics, such as `dnf` and RPM repositories in place of `apt` and `.deb` packages.
+- [ ] **macOS support:** the same for macOS. Each role gets a `Darwin.yaml`, and `install.sh` prepares a new Mac in the same way. The tasks follow macOS's own characteristics, such as Homebrew in place of `apt`, Apple Silicon builds and macOS versions of Linux-only tools (Docker Desktop instead of Docker Engine).
 
 [Go back to the menu](#-table-of-contents)
