@@ -11,7 +11,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 - [Roles](#roles)
   - [Variables](#variables)
 - [Usage](#usage)
-- [Todo](#todo)
+- [What Comes Next?](#what-comes-next)
 
 ## Roles
 
@@ -38,6 +38,8 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 
 Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian 13 and distributions based on Ubuntu 24.04 or newer (Ubuntu, Linux Mint 22, Zorin OS 18, Pop!_OS 24.04) are currently supported. Older releases lack libraries that some applications require: Spotify, for example, needs glibc 2.39.
 
+[Go back to the menu](#table-of-contents)
+
 ### Variables
 
 | Variable | Default | Description |
@@ -49,6 +51,8 @@ Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 | `install_docker_log_max_file` | `"3"` | Number of rotated container log files kept |
 | `install_docker_users` | `[]` | Users added to the `docker` group to run Docker without `sudo`. The group grants root-level privileges on the host |
 | `install_kubectl_channel` | `stable` | Release channel: `stable` for the latest release, or `stable-1.XX` to stay on a minor version. kubectl must be within one minor version of the cluster |
+
+[Go back to the menu](#table-of-contents)
 
 ## Usage
 
@@ -83,9 +87,13 @@ grep -B1 'changed:' ansible.log
 
 When it finishes, reboot the machine: this applies the upgraded packages, Zsh as the default shell and the `docker` group.
 
-## Todo
+[Go back to the menu](#table-of-contents)
+
+## What Comes Next?
 
 - [ ] Fedora support in `update_os` (`roles/update_os/tasks/Fedora.yaml`)
 - [ ] Fedora support in `install_docker` (`roles/install_docker/tasks/Fedora.yaml`)
 - [ ] macOS support in `update_os` (`roles/update_os/tasks/Darwin.yaml`)
 - [ ] macOS support in `install_docker` (`roles/install_docker/tasks/Darwin.yaml`)
+
+[Go back to the menu](#table-of-contents)
