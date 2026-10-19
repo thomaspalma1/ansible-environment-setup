@@ -6,14 +6,14 @@
 
 Ansible roles that prepare a workstation: they keep the operating system up to date and install the tools I use day to day.
 
-## Table of Contents
+## 📑 Table of Contents
 
-- [Roles](#roles)
-  - [Variables](#variables)
-- [Usage](#usage)
-- [What Comes Next?](#what-comes-next)
+- [Roles](#-roles)
+  - [Variables](#-variables)
+- [Usage](#%EF%B8%8F-usage)
+- [What Comes Next?](#-what-comes-next)
 
-## Roles
+## 🧩 Roles
 
 | Role | Description |
 | ---- | ----------- |
@@ -23,7 +23,7 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 | `install_vim` | Installs Vim and downloads the `.vimrc` into the home directory of the user Ansible connects as |
 | `install_brave` | Installs the Brave browser from the official Brave release apt repository |
 | `install_vscode` | Installs the latest stable Visual Studio Code from the official `.deb`, which also adds the Microsoft apt repository so `update_os` keeps it up to date |
-| `install_github_desktop` | Installs GitHub Desktop from the community Linux fork ([shiftkey/desktop](https://github.com/shiftkey/desktop)), since GitHub does not publish it for Linux |
+| `install_github_desktop` | Installs [GitHub Desktop](https://github.com/shiftkey/desktop) from the community Linux fork, since GitHub does not publish it for Linux |
 | `install_docker` | Installs Docker Engine, Buildx and Compose from the official Docker apt repository (the Ubuntu one on Ubuntu-based distributions, the Debian one otherwise), configures the `local` logging driver and grants Docker access to the listed users |
 | `install_terraform` | Installs Terraform from the official HashiCorp apt repository |
 | `install_vagrant` | Installs Vagrant from the official HashiCorp apt repository (the same one `install_terraform` uses) |
@@ -38,9 +38,9 @@ Ansible roles that prepare a workstation: they keep the operating system up to d
 
 Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.yaml` from its `tasks/` directory, following the `ansible_facts` values (e.g. `Fedora.yaml`, `Debian.yaml`). Debian 13 and distributions based on Ubuntu 24.04 or newer (Ubuntu, Linux Mint 22, Zorin OS 18, Pop!_OS 24.04) are currently supported. Older releases lack libraries that some applications require: Spotify, for example, needs glibc 2.39.
 
-[Go back to the menu](#table-of-contents)
+[Go back to the menu](#-table-of-contents)
 
-### Variables
+### 🔧 Variables
 
 | Variable | Default | Description |
 | -------- | ------- | ----------- |
@@ -52,9 +52,9 @@ Each role loads `<distribution>.yaml` or, when it does not exist, `<os_family>.y
 | `install_docker_users` | `[]` | Users added to the `docker` group to run Docker without `sudo`. The group grants root-level privileges on the host |
 | `install_kubectl_channel` | `stable` | Release channel: `stable` for the latest release, or `stable-1.XX` to stay on a minor version. kubectl must be within one minor version of the cluster |
 
-[Go back to the menu](#table-of-contents)
+[Go back to the menu](#-table-of-contents)
 
-## Usage
+## ▶️ Usage
 
 On a freshly installed system, run:
 
@@ -87,13 +87,13 @@ grep -B1 'changed:' ansible.log
 
 When it finishes, reboot the machine: this applies the upgraded packages, Zsh as the default shell and the `docker` group.
 
-[Go back to the menu](#table-of-contents)
+[Go back to the menu](#-table-of-contents)
 
-## What Comes Next?
+## 🔮 What Comes Next?
 
 - [ ] Fedora support in `update_os` (`roles/update_os/tasks/Fedora.yaml`)
 - [ ] Fedora support in `install_docker` (`roles/install_docker/tasks/Fedora.yaml`)
 - [ ] macOS support in `update_os` (`roles/update_os/tasks/Darwin.yaml`)
 - [ ] macOS support in `install_docker` (`roles/install_docker/tasks/Darwin.yaml`)
 
-[Go back to the menu](#table-of-contents)
+[Go back to the menu](#-table-of-contents)
