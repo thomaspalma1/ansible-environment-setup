@@ -16,6 +16,7 @@
     - install_brave
     - install_vscode
     - install_github_desktop
+    - install_java
     - install_docker
     - install_terraform
     - install_vagrant
